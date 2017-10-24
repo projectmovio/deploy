@@ -16,7 +16,7 @@ FROM alpine:3.5
 
 ENV NAME movio.k8s.local
 ENV KOPS_STATE_STORE s3://movio-bucket
-ENV AWS_ACCESS_KEY_ID=<ID>
+ENV AWS_ACCESS_KEY_ID=<KEY>
 ENV AWS_SECRET_ACCESS_KEY=<SECRET>
 
 
@@ -28,6 +28,9 @@ ARG KUBECTL_TRACK=stable.txt
 
 ARG KUBECTL_ARCH=linux/amd64
 
+RUN apk update
+RUN apk add openssh
+RUN ssh-keygen -q -t rsa -N '' -f /root/.ssh/id_rsa
 
 RUN apk add --no-cache --update ca-certificates vim curl jq && \
     KOPS_URL=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | jq -r ".assets[] | select(.name == \"kops-linux-amd64\") | .browser_download_url") && \
