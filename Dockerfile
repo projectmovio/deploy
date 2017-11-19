@@ -16,8 +16,8 @@ FROM alpine:3.5
 
 ENV NAME movio.k8s.local
 ENV KOPS_STATE_STORE s3://movio-bucket
-ENV AWS_ACCESS_KEY_ID=<AWS_KEY>
-ENV AWS_SECRET_ACCESS_KEY=<AWS_SECRET>
+ENV AWS_ACCESS_KEY_ID=""
+ENV AWS_SECRET_ACCESS_KEY=""
 
 
 # KUBECTL_SOURCE: Change to kubernetes-dev/ci for CI
@@ -41,4 +41,4 @@ RUN apk add --no-cache --update ca-certificates vim curl jq && \
     chmod +x /usr/local/bin/kubectl &&\
     apk del curl jq
 
-ENTRYPOINT ["/usr/local/bin/kops"]
+# ENTRYPOINT ["/usr/local/bin/kops"]

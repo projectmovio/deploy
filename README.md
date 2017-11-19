@@ -3,6 +3,9 @@
 * Make sure you are authorized to AWS. See: http://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html
 * docker build -t movio:1.0 .
 
+# Running locally
+* Pull down all projectmovio repositories one folder up relative this one.
+* `docker-compose up` 
 
 # Deploy steps
 

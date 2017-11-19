@@ -1,0 +1,77 @@
+version: '3'
+services:
+  anime-service-titles-updater:
+    build:
+      context: ../anime-service/titles-updater
+      dockerfile: Dockerfile
+    volumes:
+      - ../anime-service/cache:/cache
+
+  anime-service:
+    build:
+      context: ../anime-service
+      dockerfile: Dockerfile
+    # Note ports only for debug purposes
+    ports:
+      - "8085:8085"
+    networks:
+      - backend
+
+  movie-service:
+    build:
+      context: ../movie-service
+      dockerfile: Dockerfile
+    # Note ports only for debug purposes
+    ports:
+      - "1000:1000"
+    networks:
+      - backend
+
+  show-service:
+    build:
+      context: ../show-service
+      dockerfile: Dockerfile
+    # Note ports only for debug purposes
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+
+  login-service:
+    build:
+      context: ../login-service
+      dockerfile: Dockerfile
+    # Note ports only for debug purposes
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+
+  watch-history-service:
+    build:
+      context: ../watch-history-service
+      dockerfile: Dockerfile
+    # Note ports only for debug purposes
+    ports:
+      - "8083:8083"
+    networks:
+      - backend
+
+  apigateway:
+    build:
+      context: ../apigateway
+      dockerfile: Dockerfile
+    environment:
+      - LOGIN_SERVICE_HOST=login-service
+      - LOGIN_SERVICE_PORT=8081
+      - MOVIE_SERVICE_HOST=movie-service
+      - MOVIE_SERVICE_PORT=8082
+      - WATCH_HISTORY_SERVICE_HOST=watch-history-service
+      - WATCH_HISTORY_SERVICE_PORT=8083
+    ports:
+      - "9000:9000"
+    networks:
+      - backend
+
+networks:
+  backend:
